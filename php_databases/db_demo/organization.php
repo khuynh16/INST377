@@ -7,7 +7,7 @@
  * we define the method jsonSerialize.
  */
 class Organization implements JsonSerializable {
-  public $profile_id;
+  public $profile_id = -1;
   public $region;
   public $country;
   public $country_income_level;
@@ -140,11 +140,48 @@ class Organization implements JsonSerializable {
 
   // TODO #1: Implement a function to save an new organization
   // return number of rows inserted
+  
+  public function save(mysqli $conn) {
+    if ($this->profile_id == 0) {
+      $num_affected = $this
+    }
+  }
+  
+  private function insert(mysqli $conn) {
+    $stmt = $conn->prepare("INSERT INTO organizations
+                          (organization_name, organization_type, region
+                          country, country_income_level, sectors,
+                          description, city, state_or_region,
+                          founding_year, size, type_of_data_used)
+                          VALUES(?, ?, ?,
+                                 ?, ?, ?,
+                                 ?, ?, ?,
+                                 ?, ?, ?)");
+    
+    $stmt -> bind_param("ssssss",
+                        a lot of this for each argument)
+        
 
   // TODO #2: Implement a function to delete an organization.
   // return number of rows deleted
+      
+  public function delete(mysqli $conn) {
+      $stmt = $conn->prepare("DELETE FROM organizations WHERE profile_id =?");
+      $stmt->bind_param("i", $this->profile_id);
+      $stmt->execute();
+      return $stmt->affected_rows;
+    }
+                             
 
   // TODO #3: Implement a function to save changes to an existing organization
   // return number of rows updated
+    
+  private function update(mysqli $conn) {
+    $stmt = $conn->prepare("UPDATE organizations SET
+                          organization_name = ?, organization_type = ?
+                          ...
+                          ...
+                          WHERE profile_id =?");
+    
 }
  ?>
