@@ -2,14 +2,19 @@
 <head>
 <!-- CSS -->
 <style type="text/css">
-	div {
-		margin-bottom: 20px;
-	}
+div {
+	margin-bottom: 20px;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	padding: 8px;
+}
+	
 </style>
 
 <!-- Data -->
 <script>
-
 // Don't copy this to any other places in this file. You can just use the "organizations" variable to do your assignment. 
 var organizations = [
 	 {
@@ -201,14 +206,94 @@ var organizations = [
 <body>
 <!-- Feel free to add empty tags. Data shouldn't be here. -->
 	<div id="org_table"></div>
+	
+<h2>Assignment #1: Organizations</h2>		
+
+<table id="myTable">
+	<tr>
+		<th># of Nonprofit Organizations</th>
+		<th># of Organizations Less than 10 years old</th>
+		<th># of North American Organizations</th>
+		<th># of Organizations Using Transportation Data</th>
+		<th>Organizations with Number(s) in Title</th>
+	</tr>
+	<tr>
+		<td align = "center">Whatevs</td>
+		<td align = "center">Whatevs</td>
+		<td align = "center">Whatevs</td>
+		<td align = "center">Whatevs</td>
+		<td align = "left">Whatevs</td>
+	</tr>
+</table>
 
 <script>
 // outputs the first item of the organizations array. Just for testing.
 // console.log(organizations[0]); 
 console.log("test");
-
 // Your JavaScript code goes here
 
+// variable to hold number of non-profit organizations
+var numNonProfitOrgs = document.getElementById('numNonProfitOrgs')
+
+// variable to hold number of orgs with 9 or less years of 
+var numOrgsLessThan10Years = document.getElementById('numOrgsLessThan10Years')
+
+// variable to hold number of north american organizations
+var numNorthAmerican = document.getElementById('numNorthAmerican')
+
+// variable to hold number of organizations using Transportation type of data
+var numTransportation = document.getElementById('numTransportation')
+
+// variable that is used to hold current organization name (from iterated-over array down below)
+var nameWithNumber = document.getElementById('nameWithNumber')
+
+// variable to hold all organization names that have a number in it
+var arr = []
+
+// calculates:
+// - number of non-profit organizations
+// - number of orgs less than 10 years old
+// - number of North American organizations
+// - number of organizations that use Transportation type of data
+for (i = 0; i < organizations.length; i++) {
+	if (organizations[i]['Organization Type'] === "Nonprofit") 
+		numNonProfitOrgs++
+	if (2018 - organizations[i]['Founding Year'] < 10)
+		numOrgsLessThan10Years++
+	if (organizations[i]['Region'] === "North America")
+		numNorthAmerican++
+	if (organizations[i]['Type of Data Used'].indexOf('Transportation')	!= -1)
+		numTransportation++
+}		
+
+// prints out all organization names that contain at least one number 
+for (i = 0; i < organizations.length; i++) {
+	nameWithNumber = organizations[i]['Organization Name']
+	if (nameWithNumber.includes("0") || nameWithNumber.includes("1") || nameWithNumber.includes("2") ||
+		nameWithNumber.includes("3") || nameWithNumber.includes("4") || nameWithNumber.includes("5") ||
+		nameWithNumber.includes("6") || nameWithNumber.includes("7") || nameWithNumber.includes("8") || nameWithNumber.includes("9")) {
+		//document.write(nameWithNumber + ', ')
+		arr.push(nameWithNumber)
+	}
+}
+	
+// this will be the variable to return: a list of all the organization names with a number in it (in the form of the list)
+var list_of_arr = '<ul>'
+
+// bullet point for each organization in the new array
+for (i = 0; i < arr.length; i++)
+	list_of_arr += '<li>' + arr[i] + '</li>'
+
+// close the unordered list 	
+list_of_arr += '</ul>'	
+
+// as soon as page loads, replace all filler text (lines 215 to 219) with calculated values 
+var x = document.getElementById("myTable").rows[1].cells
+    x[0].innerHTML = numNonProfitOrgs
+	x[1].innerHTML = numOrgsLessThan10Years
+	x[2].innerHTML = numNorthAmerican
+	x[3].innerHTML = numTransportation
+	x[4].innerHTML = list_of_arr
 
 </script>
 
